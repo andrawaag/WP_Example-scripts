@@ -1,0 +1,21 @@
+PREFIX identifiers:<http://identifiers.org/ensembl/>
+PREFIX atlas: <http://rdf.ebi.ac.uk/resource/atlas/>
+PREFIX atlasterms: <http://rdf.ebi.ac.uk/terms/atlas/>
+PREFIX efo: <http://www.ebi.ac.uk/efo/>
+
+SELECT DISTINCT ?wpURL ?pwTitle ?expressionValue ?pvalue where {
+
+SERVICE <http://www.ebi.ac.uk/rdf/services/atlas/sparql> {
+     ?factor rdf:type efo:EFO_0000270 . 
+     ?value atlasterms:hasFactorValue ?factor . 
+     ?value atlasterms:isMeasurementOf ?probe . 
+     ?value atlasterms:pValue ?pvalue . 
+     ?value rdfs:label ?expressionValue . 
+     ?probe atlasterms:dbXref ?dbXref .
+}
+     ?pwElement dcterms:isPartOf ?pathway .
+     ?pathway dc:title ?pwTitle .
+     ?pathway dc:identifier ?wpURL .
+     ?pwElement wp:bdbEnsembl ?dbXref .
+}
+ORDER BY ASC(?pvalue)
