@@ -1,0 +1,24 @@
+SELECT DISTINCT ?wpIdentifier ?dn2Identifier  WHERE {
+?pathway dc:identifier ?wpIdentifier .
+{SELECT DISTINCT * WHERE {
+?datanode2 dc:identifier ?dn2Identifier .
+?datanode2 a gpml:DataNode .
+?datanode2 dcterms:isPartOf ?pathway .
+?datanode2 gpml:graphid ?dn2GraphId .
+?line gpml:graphref ?dn2GraphId .
+FILTER (?datanode2 != ?datanode1) 
+FILTER (?datanode2 != <http://commonchemistry.org/ChemicalDetail.aspx?ref=noIdentifier>)
+
+{SELECT DISTINCT * WHERE {   
+   ?datanode1 dc:identifier <http://identifiers.org/hmdb/HMDB01586> .
+   ?datanode1 gpml:graphid ?dn1GraphId .
+   ?datanode1 a gpml:DataNode .
+   ?datanode1 dcterms:isPartOf ?pathway .
+
+   ?line gpml:graphref ?dn1GraphId .
+   ?line a gpml:Line .
+   ?line gpml:graphid ?lineGraphId .
+   ?line dcterms:isPartOf ?pathway .}}
+
+}}
+}
